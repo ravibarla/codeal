@@ -5,6 +5,10 @@ import expressEjsLayouts from "express-ejs-layouts"
 const app = express()
 const port = 3200
 app.use(expressEjsLayouts)
+//extract style and script from sub pages into the layout
+app.set("layout extractStyles", true)
+app.set("layout extractScripts", true)
+
 app.use(express.static("./assets"))
 app.set("view engine", "ejs")
 app.set("views", "./views")

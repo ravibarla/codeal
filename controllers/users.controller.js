@@ -39,5 +39,26 @@ export const create = (req, res) => {
 
 //get sign in data and create session 
 export const createSession = (req, res) => {
-    //todo later
+    //steps to auhtn=enticate
+
+    //find user
+    User.findOne({ email: req.body.email }).then(user => {
+
+        //handle user found
+        if (user) {
+
+            //handle mismatch password
+            if (user.password != req.body.password) {
+                return res.redirect("back")
+            }
+            //handle session creation
+            res.cookie("user_id", user._id)
+            return res.redirect("/users/profile")
+        } else {
+            return res.redirect("back")
+        }
+    }).catch(err => { console.log("error finding user in sign in") })
+
+
+    //handle user not found
 }

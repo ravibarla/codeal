@@ -1,7 +1,7 @@
 import express from "express"
 import { router } from "./routes/index.js"
 import expressEjsLayouts from "express-ejs-layouts"
-
+import { db } from "./config/mongoose.js"
 const app = express()
 const port = 3200
 app.use(expressEjsLayouts)

@@ -2,9 +2,12 @@ import express from "express"
 import { router } from "./routes/index.js"
 import expressEjsLayouts from "express-ejs-layouts"
 import { db } from "./config/mongoose.js"
+import cookieParser from "cookie-parser"
 const app = express()
 const port = 3200
 app.use(expressEjsLayouts)
+app.use(express.urlencoded())
+app.use(cookieParser())
 //extract style and script from sub pages into the layout
 app.set("layout extractStyles", true)
 app.set("layout extractScripts", true)

@@ -1,7 +1,7 @@
 import express from "express"
 import { home } from "../controllers/home.controller.js"
-import { profile } from "../controllers/users.controller.js"
+import { router as users } from "./users.js"
 export const router = express.Router()
 router.get("/", home)
-router.use("/users", profile)
+router.use("/users", users)
 console.log("router is loaded")

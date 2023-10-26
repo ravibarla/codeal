@@ -2,9 +2,25 @@ import { User } from "../models/users.js"
 
 //render profile page 
 export const profile = (req, res) => {
-    res.render("user_profile", {
-        title: "user profile"
-    })
+
+    if (req.cookies.user_id) {
+        User.findById(req.cookies.user_id).catch(err => { console.log("error in finding user in profile") }).then(user => {
+            if (user) {
+                res.render("user_profile", {
+                    title: "user profile",
+                    user: user
+                })
+            }
+            else {
+                return res.redirect("/users/signin")
+            }
+        })
+    }
+    else {
+        return res.redirect("/users/signin")
+    }
+
+
 }
 //render signin page
 export const signIn = (req, res) => {

@@ -2,19 +2,33 @@ import { User } from "../models/users.js";
 
 //render profile page
 export const profile = (req, res) => {
-  res.render("user_profile", {
-    title: "user profile",
-  });
+  if (req.isAuthenticated()) {
+    console.log("inside sign in");
+    // return res.redirect("/users/profile");
+
+    return res.render("user_profile", {
+      title: "user profile",
+    });
+  }
+  //   return res.render("user_profile", {
+  //     title: "user profile",
+  //   });
 };
 //render signin page
 export const signIn = (req, res) => {
-  res.render("user_sign_in", {
+  if (req.isAuthenticated()) {
+    return res.redirect("/users/profile");
+  }
+  return res.render("user_sign_in", {
     title: "codeal |sign in",
   });
 };
 //render signup page
 export const signUp = (req, res) => {
-  res.render("user_sign_up", {
+  if (req.isAuthenticated()) {
+    return res.redirect("/users/profile");
+  }
+  return res.render("user_sign_up", {
     title: "codeal |sign up",
   });
 };

@@ -7,8 +7,13 @@ import {
   createSession,
 } from "../controllers/users.controller.js";
 import passport from "passport";
+
 export const router = express.Router();
-router.get("/profile", profile);
+router.get(
+  "/profile",
+  (req, res, next) => passport.checkAuthentication(req, res, next),
+  profile
+);
 router.get("/signin", signIn);
 router.get("/signup", signUp);
 router.post("/create", create);

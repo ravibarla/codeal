@@ -5,7 +5,7 @@ import { db } from "./config/mongoose.js";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import passport from "passport";
-import {  passportLocal } from "./config/passport-local-stratergy.js";
+import { passportLocal } from "./config/passport-local-stratergy.js";
 const app = express();
 const port = 3200;
 app.use(expressEjsLayouts);
@@ -34,6 +34,7 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use((req, res, next) => passport.setAuthenticatorUser(req, res, next));
 
 //use express router
 

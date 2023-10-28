@@ -6,6 +6,8 @@ import cookieParser from "cookie-parser";
 import session from "express-session";
 import passport from "passport";
 import { passportLocal } from "./config/passport-local-stratergy.js";
+import MongoStore from "connect-mongo";
+
 const app = express();
 const port = 3200;
 app.use(expressEjsLayouts);
@@ -19,6 +21,7 @@ app.use(express.static("./assets"));
 app.set("view engine", "ejs");
 app.set("views", "./views");
 
+//mongo store is used to store the session cookies in the db
 app.use(
   session({
     name: "codeal",
@@ -29,6 +32,14 @@ app.use(
     cookie: {
       maxAge: 1000 * 60 * 100,
     },
+    store: MongoStore.create(
+      {
+        // mongooseConnection: db,
+        mongoUrl: "mongodb://127.0.0.1:27017/codeal_development",
+        autoRemove: "disabled",
+      },
+      (err) => console.log(err || "connect-mongodb setup ok ")
+    ),
   })
 );
 

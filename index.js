@@ -7,9 +7,20 @@ import session from "express-session";
 import passport from "passport";
 import { passportLocal } from "./config/passport-local-stratergy.js";
 import MongoStore from "connect-mongo";
+import "dotenv/config";
+import sassMiddleware from "node-sass-middleware";
 
 const app = express();
 const port = 3200;
+app.use(
+  sassMiddleware({
+    src: "./assets/scss",
+    dest: "./assets/css",
+    debug: true,
+    outputStyle: "extended",
+    prefix: "/css",
+  })
+);
 app.use(expressEjsLayouts);
 app.use(express.urlencoded());
 app.use(cookieParser());
@@ -22,6 +33,8 @@ app.set("view engine", "ejs");
 app.set("views", "./views");
 
 //mongo store is used to store the session cookies in the db
+const a = process.env.mongoUrl;
+console.log("db :", a);
 app.use(
   session({
     name: "codeal",

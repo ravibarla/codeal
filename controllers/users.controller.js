@@ -61,3 +61,12 @@ export const create = (req, res) => {
 export const createSession = (req, res) => {
   return res.redirect("/");
 };
+
+export const destroySession = (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      console.log(err);
+    }
+    return res.redirect("/");
+  });
+};

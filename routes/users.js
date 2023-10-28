@@ -5,6 +5,7 @@ import {
   signIn,
   signUp,
   createSession,
+  destroySession,
 } from "../controllers/users.controller.js";
 import passport from "passport";
 
@@ -23,3 +24,4 @@ router.post(
   passport.authenticate("local", { failureRedirect: "/users/signin" }),
   createSession
 );
+router.get("/signout", destroySession);

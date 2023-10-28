@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-mongoose.connect("mongodb://localhost/codeal_development")
+mongoose.connect("mongodb://127.0.0.1:27017/codeal_development")
 
 export const db = mongoose.connection
 

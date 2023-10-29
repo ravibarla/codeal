@@ -11,4 +11,13 @@
     ></textarea>
     <input type="submit" value="Post" />
   </form>
+  <div id="post-list-container">
+    <ul>
+      <%for(post of posts){%>
+      <li><%=post.content%></li>
+      <br />
+      <li><%=post.user.name%></li>
+      <%}%>
+    </ul>
+  </div>
 </section>

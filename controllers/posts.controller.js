@@ -1,3 +1,4 @@
+import { Comment } from "../models/comment.js";
 import { Post } from "../models/post.js";
 export const create = (req, res) => {
   Post.create({
@@ -11,4 +12,19 @@ export const create = (req, res) => {
         return;
       }
     });
+};
+
+export const destroy = (req, res) => {
+  Post.findById(req.params.id).then((post) => {
+    //.id means converting the object id into string
+    if (post.user == req.user.id) {
+      post.deleteOne().then((success) => {
+        Comment.deleteMany({ post: req.params.id })
+          .catch((err) => res.redirect("back"))
+          .then((success) => res.redirect("back"));
+      });
+    } else {
+      return res.redirect("back");
+    }
+  });
 };

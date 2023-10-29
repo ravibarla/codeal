@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import { User } from "./users.js";
 const postSchema = mongoose.Schema(
   {
     content: {

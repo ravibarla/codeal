@@ -1,4 +1,6 @@
 import express from "express";
+
+export const router = express.Router();
 import {
   create,
   profile,
@@ -8,8 +10,6 @@ import {
   destroySession,
 } from "../controllers/users.controller.js";
 import passport from "passport";
-
-export const router = express.Router();
 router.get(
   "/profile",
   (req, res, next) => passport.checkAuthentication(req, res, next),

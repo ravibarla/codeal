@@ -18,3 +18,19 @@ export const create = (req, res) => {
     })
     .catch((err) => console.log(""));
 };
+
+export const destroy = (req, res) => {
+  Comment.findById(req.params.id)
+    .then((comment) => {
+      if (comment.user == req.user.id) {
+        let postId = comment.post;
+        comment.deleteOne();
+        Post.findByIdAndUpdate(postId, {
+          $pull: {
+            comments: req.params.id,
+          },
+        }).then((success) => res.redirect("back"));
+      }
+    })
+    .catch((err) => console.log());
+};

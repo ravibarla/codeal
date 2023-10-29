@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { User } from "./users.js";
+import { Comment } from "./comment.js";
 const postSchema = mongoose.Schema(
   {
     content: {
@@ -10,6 +11,13 @@ const postSchema = mongoose.Schema(
       type: mongoose.Schema.ObjectId,
       ref: User,
     },
+    //include the array of ids of all comments in this post schema itself
+    comments: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "Comment",
+      },
+    ],
   },
   { timestamps: true }
 );

@@ -8,12 +8,18 @@ import {
   signUp,
   createSession,
   destroySession,
+  update,
 } from "../controllers/users.controller.js";
 import passport from "passport";
 router.get(
   "/profile/:id",
   (req, res, next) => passport.checkAuthentication(req, res, next),
   profile
+);
+router.post(
+  "/update/:id",
+  (req, res, next) => passport.checkAuthentication(req, res, next),
+  update
 );
 router.get("/signin", signIn);
 router.get("/signup", signUp);

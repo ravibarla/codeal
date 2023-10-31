@@ -16,6 +16,15 @@ export const profile = (req, res) => {
   //     title: "user profile",
   //   });
 };
+export const update = (req, res) => {
+  if (req.user.id == req.params.id) {
+    User.findByIdAndUpdate(req.params.id, req.body).then((user) => {
+      res.redirect("back");
+    });
+  } else {
+    return res.status(401).send("Unauthorized");
+  }
+};
 //render signin page
 export const signIn = (req, res) => {
   if (req.isAuthenticated()) {

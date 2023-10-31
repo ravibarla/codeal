@@ -11,7 +11,7 @@ import {
 } from "../controllers/users.controller.js";
 import passport from "passport";
 router.get(
-  "/profile",
+  "/profile/:id",
   (req, res, next) => passport.checkAuthentication(req, res, next),
   profile
 );

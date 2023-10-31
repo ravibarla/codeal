@@ -22,9 +22,12 @@ export const home = (req, res) => {
       },
     })
     .then((posts) => {
-      return res.render("home", {
-        title: "codeal |home",
-        posts: posts,
+      User.find({}).then((users) => {
+        return res.render("home", {
+          title: "codeal |home",
+          posts: posts,
+          all_users: users,
+        });
       });
     });
 };

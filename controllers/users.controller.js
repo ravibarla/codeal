@@ -5,9 +5,11 @@ export const profile = (req, res) => {
   if (req.isAuthenticated()) {
     console.log("inside sign in");
     // return res.redirect("/users/profile");
-
-    return res.render("user_profile", {
-      title: "user profile",
+    User.findById(req.params.id).then((user) => {
+      return res.render("user_profile", {
+        title: "user profile",
+        profile_user: user,
+      });
     });
   }
   //   return res.render("user_profile", {

@@ -1,5 +1,5 @@
 import { Post } from "../models/post.js";
-
+import { User } from "../models/users.js";
 export const home = (req, res) => {
   // console.log(req.cookies)
   // res.cookies("user_id",25)

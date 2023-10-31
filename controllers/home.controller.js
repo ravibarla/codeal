@@ -1,6 +1,6 @@
 import { Post } from "../models/post.js";
 import { User } from "../models/users.js";
-export const home = (req, res) => {
+export const home = async (req, res) => {
   // console.log(req.cookies)
   // res.cookies("user_id",25)
   //   Post.find({})
@@ -12,22 +12,26 @@ export const home = (req, res) => {
   //     })
   //     .catch((err) => console.log("error in finding the posts"));
 
-  //populate the user for each posts
-  Post.find({})
-    .populate("user")
-    .populate({
-      path: "comments",
-      populate: {
-        path: "user",
-      },
-    })
-    .then((posts) => {
-      User.find({}).then((users) => {
-        return res.render("home", {
-          title: "codeal |home",
-          posts: posts,
-          all_users: users,
-        });
+  try {
+    //populate the user for each posts
+    let posts = await Post.find({})
+      .populate("user")
+      .populate({
+        path: "comments",
+        populate: {
+          path: "user",
+        },
       });
+
+    let users = await User.find({});
+
+    return res.render("home", {
+      title: "codeal |home",
+      posts: posts,
+      all_users: users,
     });
+  } catch (err) {
+    console.log("Error", err);
+    return;
+  }
 };

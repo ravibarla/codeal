@@ -9,7 +9,8 @@ import { passportLocal } from "./config/passport-local-stratergy.js";
 import MongoStore from "connect-mongo";
 import "dotenv/config";
 import sassMiddleware from "node-sass-middleware";
-
+import flash from "connect-flash";
+import { setFlash } from "./config/middleware.js";
 const app = express();
 const port = 3200;
 app.use(
@@ -59,7 +60,8 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use((req, res, next) => passport.setAuthenticatorUser(req, res, next));
-
+app.use(flash());
+app.use(setFlash)
 //use express router
 
 app.use("/", router);

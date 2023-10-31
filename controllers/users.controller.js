@@ -70,6 +70,7 @@ export const create = (req, res) => {
 
 //get sign in data and create session
 export const createSession = (req, res) => {
+  req.flash("success", "logged in successfully");
   return res.redirect("/");
 };
 
@@ -78,6 +79,7 @@ export const destroySession = (req, res) => {
     if (err) {
       console.log(err);
     }
+    req.flash("success", "you have logged out");
     return res.redirect("/");
   });
 };

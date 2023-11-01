@@ -1,8 +1,6 @@
-<link rel="stylesheet" href="/css/home.css">
+<link rel="stylesheet" href="/css/home.css" />
 
 <div id="home-container">
-
-
   <section id="feed-posts">
     <h4>Posts</h4>
     <form action="/posts/create" id="new-post-form" method="post">
@@ -18,22 +16,20 @@
     </form>
     <div id="post-list-container">
       <ul>
-        <%for(post of posts){%>
-          <%- include("_post");%>
-          
-             <%}%>
+        <%for(post of posts){%> <%- include("_post");%> <%}%>
       </ul>
     </div>
   </section>
 
-<section id="user-friends">
-<h4>friends</h4>
-<% for(user of all_users){ %>
-  <p>
-    <a href='/users/profile/<%= user.id%>' >
-      <%=user.name%>
-    </a>
-  </p>
-  <%}%>
-</section>
+  <section id="user-friends">
+    <h4>friends</h4>
+    <% for(user of all_users){ %>
+    <p>
+      <a href="/users/profile/<%= user.id%>"> <%=user.name%> </a>
+    </p>
+    <%}%>
+  </section>
 </div>
+<script src="/js/home_posts.js">
+
+</script>

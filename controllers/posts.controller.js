@@ -6,6 +6,14 @@ export const create = async (req, res) => {
       content: req.body.content,
       user: req.user._id,
     }).then((post) => {
+      if (req.xhr) {
+        return res.status(200).json({
+          data: {
+            post: post,
+          },
+          message: "post is created",
+        });
+      }
       req.flash("success", "post created successfully");
       res.redirect("back");
     });

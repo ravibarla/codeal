@@ -7,17 +7,18 @@ export const passportLocal = passport.use(
   new Strategy(
     {
       usernameField: "email",
+      passReqToCallback: true,
     },
-    (email, password, done) => {
+    (req, email, password, done) => {
       //find a user and establish an identity
       User.findOne({ email: email })
         .catch((err) => {
-          console.log("error in finding user-->passport");
+          req.flash("error", err);
           return done(err);
         })
         .then((user) => {
           if (!user || user.password != password) {
-            console.log("invalid user id or password");
+            req.flash("error", "invalid user/password");
             return done(null, false);
           }
           return done(null, user);

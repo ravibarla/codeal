@@ -12,11 +12,15 @@ export const create = (req, res) => {
         .then((comment) => {
           post.comments.push(comment);
           post.save();
+          req.flash("success", "comment published");
           return res.redirect("/");
         })
-        .catch((err) => console.log("error in creating comment"));
+        .catch((err) => req.flash("error", err));
     })
-    .catch((err) => console.log(""));
+    .catch((err) => {
+      req.flash("error", err);
+      return;
+    });
 };
 
 export const destroy = (req, res) => {
@@ -29,8 +33,14 @@ export const destroy = (req, res) => {
           $pull: {
             comments: req.params.id,
           },
-        }).then((success) => res.redirect("back"));
+        }).then((success) => {
+          req.flash("success", "comment deleted");
+          res.redirect("back");
+        });
       }
     })
-    .catch((err) => console.log());
+    .catch((err) => {
+      req.flash("error", err);
+      return;
+    });
 };

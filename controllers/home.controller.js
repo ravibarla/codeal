@@ -15,6 +15,7 @@ export const home = async (req, res) => {
   try {
     //populate the user for each posts
     let posts = await Post.find({})
+      .sort("-createdAt")
       .populate("user")
       .populate({
         path: "comments",
@@ -23,7 +24,7 @@ export const home = async (req, res) => {
         },
       });
 
-    let users = await User.find({});
+    let users = await User.find({});  
 
     return res.render("home", {
       title: "codeal |home",

@@ -9,8 +9,10 @@
         url: "/posts/create",
         data: newPostForm.serialize(),
         success: (data) => {
-          let newpost = newPostDom(data.data.post);
-          $("#post-list-container>ul").prepend(newpost)
+          let newPost = newPostDom(data.data.post);
+          // console.log(data)
+          $("#post-list-container>ul").prepend(newPost);
+          deletePost($(" .delete-post-button", newPost));
         },
         error: (error) => {
           console.log(error);
@@ -25,7 +27,7 @@
   <p>
   
     <small>
-      <a class="delete-post-button" href="/posts/destroy/${post.id}">X</a>
+      <a class="delete-post-button" href="/posts/destroy/${post._id}">X</a>
     </small>
     ${post.content}
 
@@ -54,6 +56,23 @@
 </li>
 
     `);
+  };
+
+  //method to delete a post from dom
+  let deletePost = (deleteLink) => {
+    $(deleteLink).click((e) => {
+      e.preventDefault();
+      $.ajax({
+        type: "get",
+        url: $(deleteLink).prop("href"),
+        success: (data) => {
+          $(`#post-$(data.post_id)`).remove();
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+    });
   };
   createPost();
 }

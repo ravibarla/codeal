@@ -3,7 +3,7 @@ import { User } from "../models/users.js";
 //render profile page
 export const profile = (req, res) => {
   if (req.isAuthenticated()) {
-    console.log("inside sign in");
+    // console.log("inside sign in");
     // return res.redirect("/users/profile");
     User.findById(req.params.id).then((user) => {
       return res.render("user_profile", {
@@ -19,9 +19,11 @@ export const profile = (req, res) => {
 export const update = (req, res) => {
   if (req.user.id == req.params.id) {
     User.findByIdAndUpdate(req.params.id, req.body).then((user) => {
+      req.flash("success", "updated");
       res.redirect("back");
     });
   } else {
+    req.flash("error", "unauthorized");
     return res.status(401).send("Unauthorized");
   }
 };
@@ -47,6 +49,7 @@ export const signUp = (req, res) => {
 //get sign up data
 export const create = (req, res) => {
   if (req.body.password != req.body.confirmPassword) {
+    req.flash("error", "password do not match");
     return res.redirect("back");
   }
   User.findOne({ email: req.body.email })
@@ -54,11 +57,12 @@ export const create = (req, res) => {
       if (!user) {
         User.create(req.body)
           .catch((err) => {
-            console.log("error in creating user in sign up");
+            req.flash("error", err);
             return;
           })
           .then((success) => res.redirect("/users/signin"));
       } else {
+        req.flash("success", "you have signed up , login to continue");
         return res.redirect("back");
       }
     })

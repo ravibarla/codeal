@@ -3,6 +3,7 @@
 <div id="home-container">
   <section id="feed-posts">
     <h4>Posts</h4>
+    <%if(locals.user){%>
     <form action="/posts/create" id="new-post-form" method="post">
       <textarea
         placeholder="type here"
@@ -12,11 +13,14 @@
         rows="3"
         required
       ></textarea>
-      <input type="submit" value="Post" />
+      <input type="submit" value="post" />
     </form>
+    <%}%>
+
     <div id="post-list-container">
       <ul>
-        <%for(post of posts){%> <%- include("_post");%> <%}%>
+        <%for(post of posts){%> <%- include("_post");%>
+         <%}%>
       </ul>
     </div>
   </section>
@@ -30,6 +34,4 @@
     <%}%>
   </section>
 </div>
-<script src="/js/home_posts.js">
-
-</script>
+<script src="/js/home_posts.js"></script>

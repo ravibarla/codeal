@@ -16,12 +16,38 @@ export const profile = (req, res) => {
   //     title: "user profile",
   //   });
 };
-export const update = (req, res) => {
+export const update = async (req, res) => {
+  // if (req.user.id == req.params.id) {
+  //   User.findByIdAndUpdate(req.params.id, req.body).then((user) => {
+  //     req.flash("success", "updated");
+  //     res.redirect("back");
+  //   });
+  // } else {
+  //   req.flash("error", "unauthorized");
+  //   return res.status(401).send("Unauthorized");
+  // }
+
   if (req.user.id == req.params.id) {
-    User.findByIdAndUpdate(req.params.id, req.body).then((user) => {
-      req.flash("success", "updated");
-      res.redirect("back");
-    });
+    try {
+      let user = await User.findById(req.params.id);
+      console.log(req.file);
+      User.uploadedAvatar(req, res, function (err) {
+        if (err) {
+          console.log("***multer Error :", err);
+        }
+        console.log(req.file);
+        user.name = req.body.name;
+        user.email = req.body.email;
+        if (req.file) {
+          user.avatar = User.avatarPath + "/" + req.file.filename;
+        }
+        user.save();
+        return res.redirect("back");
+      });
+    } catch (err) {
+      req.flash("error", err);
+      return res.redirect("back");
+    }
   } else {
     req.flash("error", "unauthorized");
     return res.status(401).send("Unauthorized");

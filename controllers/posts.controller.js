@@ -42,7 +42,7 @@ export const destroy = (req, res) => {
                 data: {
                   post_id: req.params.id,
                 },
-                message: "post deleted successfully",
+                message: "post deleted successfully ",
               });
             }
             req.flash("success", "post destroye successfully");

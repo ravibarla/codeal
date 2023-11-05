@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import multer from "multer";
 import path from "path";
-const AVATAR_PATH = path.join("/uploads/users/avatar");
+const AVATAR_PATH = path.join("uploads/users/avatars");
 const userSchema = new mongoose.Schema(
   {
     email: {
@@ -25,10 +25,14 @@ const userSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+const __dirname = path.resolve();
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(path.resolve(), "..", AVATAR_PATH));
+    cb(null, path.join(__dirname, "/", AVATAR_PATH));
+    
+    // console.log("dir path :",__dirname)
+    // cb(null, "uploads/users/avatars/");
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
@@ -36,4 +40,9 @@ const storage = multer.diskStorage({
   },
 });
 
+//static
+userSchema.statics.uploadedAvatar = multer({ storage: storage }).single(
+  "avatar"
+);
+userSchema.statics.avatarPath = AVATAR_PATH;
 export const User = mongoose.model("User", userSchema);

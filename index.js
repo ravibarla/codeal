@@ -11,6 +11,7 @@ import "dotenv/config";
 import sassMiddleware from "node-sass-middleware";
 import flash from "connect-flash";
 import { setFlash } from "./config/middleware.js";
+import path from "path";
 const app = express();
 const port = 3200;
 app.use(
@@ -30,6 +31,9 @@ app.set("layout extractStyles", true);
 app.set("layout extractScripts", true);
 
 app.use(express.static("./assets"));
+app.use(express.static("uploads/users/avatars"));
+const __dirname = path.resolve();
+app.use(express.static(__dirname));
 app.set("view engine", "ejs");
 app.set("views", "./views");
 
@@ -61,7 +65,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use((req, res, next) => passport.setAuthenticatorUser(req, res, next));
 app.use(flash());
-app.use(setFlash)
+app.use(setFlash);
 //use express router
 
 app.use("/", router);

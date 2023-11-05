@@ -31,9 +31,11 @@ app.set("layout extractStyles", true);
 app.set("layout extractScripts", true);
 
 app.use(express.static("./assets"));
-app.use(express.static("uploads/users/avatars"));
+//make the upload path available to the browser
 const __dirname = path.resolve();
-app.use(express.static(__dirname));
+// app.use(express.static(__dirname));
+// console.log("jasbc :", path.join(__dirname, "/uploads"));
+app.use("uploads", express.static(path.join(__dirname, "/uploads")));
 app.set("view engine", "ejs");
 app.set("views", "./views");
 

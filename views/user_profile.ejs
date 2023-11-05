@@ -1,7 +1,10 @@
 <link rel="stylesheet" href="/css/user_profile.css" />
-<h1>codeal / user profile</h1>
+
 
 <%if(user.id==profile_user.id){%>
+ <%=  console.log("u :",user.avatar)%>
+  <img src="<%= user.avatar%>" alt="<%= user.name%>"   width="100%" >
+
 <!--if user matches than show the form -->
 <form
   action="/users/update/<%=profile_user.id%>"
@@ -25,7 +28,7 @@
     value="<%=profile_user.email%>"
     required
   />
-  <input type="file" name="avatar" id="" placeholder="profile picture" >
+  <input type="file" name="avatar" id="" placeholder="profile picture" />
   <input type="submit" value="update" />
 </form>
 <%}else{%>

@@ -1,10 +1,8 @@
 import { User } from "../models/users.js";
-
+import path from "path";
 //render profile page
 export const profile = (req, res) => {
   if (req.isAuthenticated()) {
-    // console.log("inside sign in");
-    // return res.redirect("/users/profile");
     User.findById(req.params.id).then((user) => {
       return res.render("user_profile", {
         title: "user profile",
@@ -12,25 +10,11 @@ export const profile = (req, res) => {
       });
     });
   }
-  //   return res.render("user_profile", {
-  //     title: "user profile",
-  //   });
 };
 export const update = async (req, res) => {
-  // if (req.user.id == req.params.id) {
-  //   User.findByIdAndUpdate(req.params.id, req.body).then((user) => {
-  //     req.flash("success", "updated");
-  //     res.redirect("back");
-  //   });
-  // } else {
-  //   req.flash("error", "unauthorized");
-  //   return res.status(401).send("Unauthorized");
-  // }
-
   if (req.user.id == req.params.id) {
     try {
       let user = await User.findById(req.params.id);
-      console.log(req.file);
       User.uploadedAvatar(req, res, function (err) {
         if (err) {
           console.log("***multer Error :", err);
@@ -39,7 +23,7 @@ export const update = async (req, res) => {
         user.name = req.body.name;
         user.email = req.body.email;
         if (req.file) {
-          user.avatar = User.avatarPath + "/" + req.file.filename;
+          user.avatar = path.join(User.avatarPath, req.file.filename);
         }
         user.save();
         return res.redirect("back");

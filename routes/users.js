@@ -16,6 +16,8 @@ router.get(
   (req, res, next) => passport.checkAuthentication(req, res, next),
   profile
 );
+
+
 router.post(
   "/update/:id",
   (req, res, next) => passport.checkAuthentication(req, res, next),

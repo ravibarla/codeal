@@ -1,9 +1,9 @@
 <link rel="stylesheet" href="/css/user_profile.css" />
 
+<img src="<%= user.avatar%>" alt="<%= user.name%>"   width="100" >
 
 <%if(user.id==profile_user.id){%>
  <%=  console.log("u :",user.avatar)%>
-  <img src="<%= user.avatar%>" alt="<%= user.name%>"   width="100%" >
 
 <!--if user matches than show the form -->
 <form

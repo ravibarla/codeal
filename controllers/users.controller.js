@@ -1,5 +1,6 @@
 import { User } from "../models/users.js";
 import path from "path";
+import fs from "fs";
 //render profile page
 export const profile = (req, res) => {
   if (req.isAuthenticated()) {
@@ -22,7 +23,12 @@ export const update = async (req, res) => {
         console.log(req.file);
         user.name = req.body.name;
         user.email = req.body.email;
+        // console.log("avatar path :",User.avatarPath)
+        // console.log("req.file.filename :",req.file.filename)
         if (req.file) {
+          if (user.avatar) {
+            fs.unlinkSync(path.join(path.resolve(), user.avatar));
+          }
           user.avatar = path.join(User.avatarPath, req.file.filename);
         }
         user.save();

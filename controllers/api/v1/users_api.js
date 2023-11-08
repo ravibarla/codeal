@@ -15,7 +15,7 @@ export const createSession = async (req, res) => {
         "signed in successfully, here is your token ,please keep it safe",
       data: {
         token: jwt.sign(user.toJSON(), "codeal", {
-          expiresIn: "10000",
+          expiresIn: "100000",
         }),
       },
     });

@@ -21,8 +21,7 @@ export const destroy = async (req, res) => {
   await Post.findById(req.params.id).then((post) => {
     //.id means converting the object id into string
     // if (post.user == req.user.id) {
-    post.deleteOne()
-    .then((success) => {
+    post.deleteOne().then((success) => {
       Comment.deleteMany({ post: req.params.id })
         .catch((err) => {
           // req.flash("error", err);
@@ -38,8 +37,10 @@ export const destroy = async (req, res) => {
         });
     });
     // } else {
-    //   req.flash("error", "you cannot delete successfully");
-    //   return res.redirect("back");
+
     // }
+  });
+  return res.json(401, {
+    message: "you cannot delete this post",
   });
 };

@@ -6,12 +6,14 @@ import cookieParser from "cookie-parser";
 import session from "express-session";
 import passport from "passport";
 import { passportLocal } from "./config/passport-local-stratergy.js";
+import { passportJWT } from "./config/passport-jwt-startegy.js";
 import MongoStore from "connect-mongo";
 import "dotenv/config";
 import sassMiddleware from "node-sass-middleware";
 import flash from "connect-flash";
 import { setFlash } from "./config/middleware.js";
 import path from "path";
+
 const app = express();
 const port = 3200;
 app.use(

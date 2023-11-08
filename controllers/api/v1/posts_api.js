@@ -21,7 +21,8 @@ export const destroy = async (req, res) => {
   await Post.findById(req.params.id).then((post) => {
     //.id means converting the object id into string
     // if (post.user == req.user.id) {
-    post.deleteOne().then((success) => {
+    post.deleteOne()
+    .then((success) => {
       Comment.deleteMany({ post: req.params.id })
         .catch((err) => {
           // req.flash("error", err);

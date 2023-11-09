@@ -17,7 +17,6 @@ router.get(
   profile
 );
 
-
 router.post(
   "/update/:id",
   (req, res, next) => passport.checkAuthentication(req, res, next),
@@ -26,6 +25,7 @@ router.post(
 router.get("/signin", signIn);
 router.get("/signup", signUp);
 router.post("/create", create);
+
 //use passport as amiddleware to authenticate
 router.post(
   "/createSession",
@@ -33,3 +33,12 @@ router.post(
   createSession
 );
 router.get("/signout", destroySession);
+router.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+router.get(
+  "/auth/google/callback",
+  passport.authenticate("google", { failureRedirect: "/users/signin" }),
+  createSession
+);

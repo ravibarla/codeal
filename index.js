@@ -13,7 +13,7 @@ import sassMiddleware from "node-sass-middleware";
 import flash from "connect-flash";
 import { setFlash } from "./config/middleware.js";
 import path from "path";
-
+import { passportGoogle } from "./config/passport-google-oath-startegy.js";
 const app = express();
 const port = 3200;
 app.use(

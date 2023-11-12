@@ -1,13 +1,19 @@
 import { renderTemplate, transporter } from "../config/nodemailer.js";
 
 export const newComment = (comment) => {
-  console.log("inside new comment");
+
+  let htmlString = renderTemplate(
+    {
+      comment: comment,
+    },
+    "/comments/newComments.ejs"
+  );
   transporter
     .sendMail({
-      from: "ad665014@gmail.com",
-      to: "ravibarla1@gmail.com",
+      from: "*****",
+      to: "******",
       subject: "new comment published",
-      html: "<h1>your comment is now published </h1>",
+      html: htmlString,
     })
     .catch((err) => {
       console.log("error in sending mail ", err);

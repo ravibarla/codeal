@@ -15,17 +15,29 @@ export const transporter = createTransport({
 
 export const renderTemplate = (data, relativePath) => {
   let mailHTML;
-  ejs
-    .renderFile(path.resolve(), "/views/mailers", relativePath, data)
-    .catch((err) => {
+  //   let tmp = path.join(path.resolve(), "views/mailers", relativePath);
+  //   console.log("path of render :", tmp);
+  ejs.renderFile(
+    path.join(path.resolve(), "views/mailers", relativePath),
+    data,
+    (err, template) => {
       if (err) {
-        console.log("error in rendering template");
+        console.log("error in rendering template",err);
         return;
       }
-    })
-    .then((template) => {
       mailHTML = template;
-    });
+    }
+  );
+
+  // .catch((err) => {
+  //   if (err) {
+  //     console.log("error in rendering template");
+  //     return;
+  //   }
+  // })
+  // .then((template) => {
+  //   mailHTML = template;
+  // });
   return mailHTML;
 };
 

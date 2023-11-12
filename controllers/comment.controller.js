@@ -2,31 +2,38 @@ import { newComment } from "../mailers/comment.mailers.js";
 import { Comment } from "../models/comment.js";
 import { Post } from "../models/post.js";
 
-export const create = (req, res) => {
-  Post.findById(req.body.post)
-    .then((post) => {
-      Comment.create({
+export const create = async (req, res) => {
+  try {
+    let post = await Post.findById(req.body.post);
+    if (post) {
+      let comment = await Comment.create({
         content: req.body.content,
         post: req.body.post,
         user: req.user._id,
-      })
-        .then((comment) => {
-          post.comments.push(comment);
-          post.save();
-          req.flash("success", "comment published");
-          // let populatedComment = comment
-          //   .populate("user", "name email")
-          //   .execPopulate();
-          // newComment(populatedComment);
-          newComment(comment);
-          return res.redirect("/");
-        })
-        .catch((err) => req.flash("error", err));
-    })
-    .catch((err) => {
-      req.flash("error", err);
-      return;
-    });
+      });
+
+      post.comments.push(comment);
+      post.save();
+
+      comment = await comment.populate("user", "name email");
+      newComment(comment);
+      if (req.xhr) {
+        return res.status(200).json({
+          data: {
+            comment: comment,
+          },
+          message: "Post created!",
+        });
+      }
+
+      req.flash("success", "Comment published!");
+
+      res.redirect("/");
+    }
+  } catch (err) {
+    console.log("err :", err);
+    return;
+  }
 };
 
 export const destroy = (req, res) => {

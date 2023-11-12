@@ -1,3 +1,4 @@
+import { newComment } from "../mailers/comment.mailers.js";
 import { Comment } from "../models/comment.js";
 import { Post } from "../models/post.js";
 
@@ -13,6 +14,11 @@ export const create = (req, res) => {
           post.comments.push(comment);
           post.save();
           req.flash("success", "comment published");
+          // let populatedComment = comment
+          //   .populate("user", "name email")
+          //   .execPopulate();
+          // newComment(populatedComment);
+          newComment(comment);
           return res.redirect("/");
         })
         .catch((err) => req.flash("error", err));

@@ -8,8 +8,8 @@ export const transporter = createTransport({
   port: 465,
   secure: false,
   auth: {
-    user: "dummymail",
-    pass: "dummypass",
+    user: "ad665014@gmail.com",
+    pass: "bohk wyya mstu ppsz",
   },
 });
 

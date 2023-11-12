@@ -4,8 +4,8 @@ export const newComment = (comment) => {
   console.log("inside new comment");
   transporter
     .sendMail({
-      from: "dummysender@gmail.com",
-      to: "dummyreceiver@gmail.com",
+      from: "ad665014@gmail.com",
+      to: "ravibarla1@gmail.com",
       subject: "new comment published",
       html: "<h1>your comment is now published </h1>",
     })

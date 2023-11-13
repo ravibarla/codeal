@@ -1,3 +1,4 @@
+import { queue } from "../config/kue.js";
 import { newComment } from "../mailers/comment.mailers.js";
 import { Comment } from "../models/comment.js";
 import { Post } from "../models/post.js";
@@ -16,7 +17,14 @@ export const create = async (req, res) => {
       post.save();
 
       comment = await comment.populate("user", "name email");
-      newComment(comment);
+      // newComment(comment);
+      let job = queue.create("emails", comment).save((err) => {
+        if (err) {
+          console.log("error in creating a queue :");
+          return;
+        }
+        console.log("job is enqeued :", job.id);
+      });
       if (req.xhr) {
         return res.status(200).json({
           data: {

@@ -8,7 +8,7 @@ export const transporter = createTransport({
   port: 465,
   secure: false,
   auth: {
-    user: "ad665014@gmail.com",
+    user: "**@gmail.com",
     pass: "bohk wyya mstu ppsz",
   },
 });

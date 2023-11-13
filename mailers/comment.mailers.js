@@ -10,8 +10,8 @@ export const newComment = (comment) => {
   );
   transporter
     .sendMail({
-      from: "*****",
-      to: "******",
+      from: "**@gmail.com",
+      to: "**@gmail.com",
       subject: "new comment published",
       html: htmlString,
     })

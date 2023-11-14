@@ -6,10 +6,15 @@ export const chatSockets = (socketServer) => {
       origin: "*",
     },
   });
-  io.on("connection", (socket) => {
+  io.sockets.on("connection", (socket) => {
     console.log("new connection received ", socket.id);
     socket.on("disconnect", () => {
       console.log("socket disconnected!");
+    });
+    socket.on("join_room", function (data) {
+      console.log("joining request received :", data);
+      socket.join(data.chatroom);
+      io.in(data.chatroom).emit("user_joined :", data);
     });
   });
 };

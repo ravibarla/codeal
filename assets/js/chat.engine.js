@@ -9,11 +9,16 @@ class ChatEngine {
   }
 
   connectionHandler() {
-  
-    this.socket
-      .on("connect", () => {
-        console.log("connection established using sockets");
-      })
-      
+    let self = this;
+    this.socket.on("connect", () => {
+      console.log("connection established using sockets");
+      self.socket.emit("join_room", {
+        user_email: self.userEmail,
+        chatroom: "codeal",
+      });
+      self.socket.on("user_joined", (data) => {
+        console.log("a user has joined !", data);
+      });
+    });
   }
 }

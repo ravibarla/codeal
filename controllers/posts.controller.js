@@ -30,6 +30,7 @@ export const destroy = (req, res) => {
   Post.findById(req.params.id).then((post) => {
     //.id means converting the object id into string
     if (post.user == req.user.id) {
+      //change :deleting the associated likes for the post and all its comments likes too
       post.deleteOne().then((success) => {
         Comment.deleteMany({ post: req.params.id })
           .catch((err) => {

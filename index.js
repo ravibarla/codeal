@@ -14,8 +14,16 @@ import flash from "connect-flash";
 import { setFlash } from "./config/middleware.js";
 import path from "path";
 import { passportGoogle } from "./config/passport-google-oath-startegy.js";
+
+// setup the chat server to be used in Socket.io
+import {Server} from "http"
+import {chatSockets} from "./config/chat.sockets.js"
+
 const app = express();
 const port = 3200;
+const chatServer = new Server(app);
+chatSockets(chatServer)
+chatServer.listen(5000)
 app.use(
   sassMiddleware({
     src: "./assets/scss",

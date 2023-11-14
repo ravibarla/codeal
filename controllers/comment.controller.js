@@ -55,6 +55,8 @@ export const destroy = (req, res) => {
             comments: req.params.id,
           },
         }).then((success) => {
+          // change :: destroy the assiciated likes for the comment
+          Like.deleteMany({ likeable: comment._id, onModel: "Comment" });
           req.flash("success", "comment deleted");
           res.redirect("back");
         });

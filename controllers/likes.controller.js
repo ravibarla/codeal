@@ -33,7 +33,7 @@ export const toggleLike = async (req, res) => {
         onModel: req.query.type,
         user: req.user._id,
       });
-      likebale.likes.push(newLike._id);
+      likebale.likes.push(newLike ._id);
       likebale.save();
     }
     return res.json(200, {

@@ -3,7 +3,7 @@
 <div id="home-container">
   <section id="feed-posts">
     <h4>Posts</h4>
-    <%if(locals.user){%>
+    <% if(locals.user){%>
     <form action="/posts/create" id="new-post-form" method="post">
       <textarea
         placeholder="type here"
@@ -19,8 +19,7 @@
 
     <div id="post-list-container">
       <ul>
-        <%for(post of posts){%> <%- include("_post");%>
-         <%}%>
+        <%for(post of posts){%> <%- include("_post");%> <%}%>
       </ul>
     </div>
   </section>
@@ -34,4 +33,15 @@
     <%}%>
   </section>
 </div>
+<!-- importing this script for creating the comment -->
 <script src="/js/home_posts.js"></script>
+<script src="/js/home_post_comment.js"></script>
+
+<!-- change :: import script file for toggle like , also run it over for already present posts and comment on the page -->
+<script src="js/toggle_likes.js"></script>
+<script>
+  $("toggle-like-button").each(() => {
+    let self = this;
+    let toggleLike = new ToggleLike(self);
+  });
+</script>

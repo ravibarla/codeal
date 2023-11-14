@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { User } from "./users.js";
 import { Post } from "./post.js";
-export const commentSchema = mongoose.Schema(
+export const commentSchema =new mongoose.Schema(
   {
     content: {
       type: String,
@@ -16,6 +16,12 @@ export const commentSchema = mongoose.Schema(
       type: mongoose.Schema.ObjectId,
       ref: "Post",
     },
+    likes: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "Like",
+      },
+    ],
   },
   {
     timestamps: true,

@@ -2,7 +2,7 @@ import { Post } from "../models/post.js";
 import { User } from "../models/users.js";
 export const home = async (req, res) => {
   try {
-    //populate the user for each posts
+    // change :: populate likes of each post and comment
     let posts = await Post.find({})
       .sort("-createdAt")
       .populate("user")
@@ -11,7 +11,12 @@ export const home = async (req, res) => {
         populate: {
           path: "user",
         },
-      });
+        populate: {
+          path: "likes",
+        }
+      })
+      .populate("comments")
+      .populate("likes");
 
     let users = await User.find({});
 
@@ -22,6 +27,6 @@ export const home = async (req, res) => {
     });
   } catch (err) {
     console.log("Error", err);
-    return;
+    return; 
   }
 };

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { User } from "./users.js";
 import { Comment } from "./comment.js";
-const postSchema = mongoose.Schema(
+const postSchema =new mongoose.Schema(
   {
     content: {
       type: String,
@@ -16,6 +16,12 @@ const postSchema = mongoose.Schema(
       {
         type: mongoose.Schema.ObjectId,
         ref: "Comment",
+      },
+    ],
+    likes: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "Like",
       },
     ],
   },

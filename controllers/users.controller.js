@@ -1,6 +1,8 @@
 import { User } from "../models/users.js";
 import path from "path";
 import fs from "fs";
+import { development } from "../config/env.js";
+
 //render profile page
 export const profile = (req, res) => {
   if (req.isAuthenticated()) {

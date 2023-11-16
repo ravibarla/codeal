@@ -2,15 +2,15 @@ import passport from "passport";
 import { OAuth2Strategy } from "passport-google-oauth";
 import crypto from "crypto";
 import { User } from "../models/users.js";
+import { development } from "./env.js";
 
 //tell passport to use a new strategy for google login
 export const passportGoogle = passport.use(
   new OAuth2Strategy(
     {
-      clientID:
-        "42169523391-ff8j1pipqskkh23j2uej8efs139s0bmt.apps.googleusercontent.com",
-      clientSecret: "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",
-      callbackURL: "http://localhost:3200/users/auth/google/callback",
+      clientID: development.google_client_id,
+      clientSecret: development.google_client_secret,
+      callbackURL: development.google_call_back_url,
     },
     (accessToken, refreshToken, profile, done) => {
       //find a user
@@ -18,7 +18,7 @@ export const passportGoogle = passport.use(
         .then((user) => {
           if (user) {
             //if found set the user as req.user
-            // console.log(profile);
+            console.log("user", user, "P", profile);
             return done(null, user);
           } else {
             //if not found create the user and set it as req.user

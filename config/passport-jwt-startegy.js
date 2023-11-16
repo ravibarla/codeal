@@ -1,11 +1,13 @@
 import passport from "passport";
 import { Strategy, ExtractJwt } from "passport-jwt";
 import { User } from "../models/users.js";
+import { development } from "./env.js";
+
 export const passportJWT = null;
 
 let opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: "codeal",
+  secretOrKey: development.jwtSecretKey,
 };
 passport.use(
   new Strategy(opts, (jwtPayLoad, done) => {

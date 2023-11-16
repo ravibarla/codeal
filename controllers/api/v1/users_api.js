@@ -1,6 +1,7 @@
 import { json } from "express";
 import { User } from "../../../models/users.js";
 import jwt from "jsonwebtoken";
+import { development } from "../../../config/env.js";
 
 export const createSession = async (req, res) => {
   try {
@@ -14,7 +15,7 @@ export const createSession = async (req, res) => {
       message:
         "signed in successfully, here is your token ,please keep it safe",
       data: {
-        token: jwt.sign(user.toJSON(), "codeal", {
+        token: jwt.sign(user.toJSON(), development.jwtSecretKey, {
           expiresIn: "100000",
         }),
       },

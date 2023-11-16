@@ -1,17 +1,9 @@
 import { createTransport } from "nodemailer";
 import ejs from "ejs";
 import path from "path";
+import { development } from "./env.js";
 
-export const transporter = createTransport({
-  service: "gmail",
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: false,
-  auth: {
-    user: "**@gmail.com",
-    pass: "bohk wyya mstu ppsz",
-  },
-});
+export const transporter = createTransport(development.smpt);
 
 export const renderTemplate = (data, relativePath) => {
   let mailHTML;
@@ -22,7 +14,7 @@ export const renderTemplate = (data, relativePath) => {
     data,
     (err, template) => {
       if (err) {
-        console.log("error in rendering template",err);
+        console.log("error in rendering template", err);
         return;
       }
       mailHTML = template;

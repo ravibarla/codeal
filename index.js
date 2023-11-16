@@ -8,30 +8,32 @@ import passport from "passport";
 import { passportLocal } from "./config/passport-local-stratergy.js";
 import { passportJWT } from "./config/passport-jwt-startegy.js";
 import MongoStore from "connect-mongo";
-import "dotenv/config";
+import { development } from "./config/env.js";
 import sassMiddleware from "node-sass-middleware";
 import flash from "connect-flash";
 import { setFlash } from "./config/middleware.js";
 import path from "path";
 import { passportGoogle } from "./config/passport-google-oath-startegy.js";
-
+import logger from "morgan";
 // setup the chat server to be used in Socket.io
 // import { Server } from "http";
 import { createServer } from "http";
 import { chatSockets } from "./config/chat.sockets.js";
-
+const asset_path = development.asset_path;
 const app = express();
 const port = 3200;
+if (development.name == "development") {
+  app.use(
+    sassMiddleware({
+      src: path.join(path.resolve(), asset_path, "scss"),
+      dest: path.join(path.resolve(), asset_path, "css"),
+      debug: true,
+      outputStyle: "extended",
+      prefix: "/css",
+    })
+  );
+}
 
-app.use(
-  sassMiddleware({
-    src: "./assets/scss",
-    dest: "./assets/css",
-    debug: true,
-    outputStyle: "extended",
-    prefix: "/css",
-  })
-);
 app.use(expressEjsLayouts);
 app.use(express.urlencoded());
 app.use(cookieParser());
@@ -39,12 +41,13 @@ app.use(cookieParser());
 app.set("layout extractStyles", true);
 app.set("layout extractScripts", true);
 
-app.use(express.static("./assets"));
+app.use(express.static(asset_path));
 //make the upload path available to the browser
 const __dirname = path.resolve();
 // app.use(express.static(__dirname));
 // console.log("jasbc :", path.join(__dirname, "/uploads"));
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+app.use(logger(development.morgan.mode, development.morgan.options));
 app.set("view engine", "ejs");
 app.set("views", "./views");
 
@@ -55,7 +58,7 @@ app.use(
   session({
     name: "codeal",
     //todo change the secret before deployment in production mode
-    secret: "ravi",
+    secret: development.session_cookie_key,
     saveUninitialized: false,
     resave: false,
     cookie: {

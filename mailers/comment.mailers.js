@@ -1,7 +1,7 @@
+import { development } from "../config/env.js";
 import { renderTemplate, transporter } from "../config/nodemailer.js";
 
 export const newComment = (comment) => {
-
   let htmlString = renderTemplate(
     {
       comment: comment,
@@ -10,8 +10,8 @@ export const newComment = (comment) => {
   );
   transporter
     .sendMail({
-      from: "**@gmail.com",
-      to: "**@gmail.com",
+      from: development.transporter.from,
+      to: development.transporter.to,
       subject: "new comment published",
       html: htmlString,
     })

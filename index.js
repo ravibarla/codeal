@@ -8,7 +8,7 @@ import passport from "passport";
 import { passportLocal } from "./config/passport-local-stratergy.js";
 import { passportJWT } from "./config/passport-jwt-startegy.js";
 import MongoStore from "connect-mongo";
-import { development } from "./config/env.js";
+import { env } from "./config/env.js";
 import sassMiddleware from "node-sass-middleware";
 import flash from "connect-flash";
 import { setFlash } from "./config/middleware.js";
@@ -19,10 +19,11 @@ import logger from "morgan";
 // import { Server } from "http";
 import { createServer } from "http";
 import { chatSockets } from "./config/chat.sockets.js";
-const asset_path = development.asset_path;
+
+const asset_path = env.asset_path;
 const app = express();
 const port = 3200;
-if (development.name == "development") {
+if (env.name == "dev") {
   app.use(
     sassMiddleware({
       src: path.join(path.resolve(), asset_path, "scss"),
@@ -32,6 +33,7 @@ if (development.name == "development") {
       prefix: "/css",
     })
   );
+  console.log("inside dev");
 }
 
 app.use(expressEjsLayouts);
@@ -47,7 +49,7 @@ const __dirname = path.resolve();
 // app.use(express.static(__dirname));
 // console.log("jasbc :", path.join(__dirname, "/uploads"));
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
-app.use(logger(development.morgan.mode, development.morgan.options));
+app.use(logger(env.morgan.mode, env.morgan.options));
 app.set("view engine", "ejs");
 app.set("views", "./views");
 
@@ -58,7 +60,7 @@ app.use(
   session({
     name: "codeal",
     //todo change the secret before deployment in production mode
-    secret: development.session_cookie_key,
+    secret: env.session_cookie_key,
     saveUninitialized: false,
     resave: false,
     cookie: {

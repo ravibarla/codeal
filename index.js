@@ -26,8 +26,11 @@ const port = 3200;
 if (env.name == "dev") {
   app.use(
     sassMiddleware({
-      src: path.join(path.resolve(), asset_path, "scss"),
-      dest: path.join(path.resolve(), asset_path, "css"),
+      // src: path.join(path.resolve(), asset_path, "scss"),
+      // dest: path.join(path.resolve(), asset_path, "css"),
+      
+      src: "./assets/scss",
+      dest: "./assets/scss",
       debug: true,
       outputStyle: "extended",
       prefix: "/css",
@@ -43,7 +46,11 @@ app.use(cookieParser());
 app.set("layout extractStyles", true);
 app.set("layout extractScripts", true);
 
-app.use(express.static(asset_path));
+// app.use(express.static(asset_path));
+
+// app.use(express.static());
+app.use(express.static("./assets"));
+
 //make the upload path available to the browser
 const __dirname = path.resolve();
 // app.use(express.static(__dirname));
